@@ -2,6 +2,7 @@
 Latest Update Signed --> 3.59<br />
 Author --> Me<br />
 # Special Thanks to
+###  Arbitary#1234 (Development)
 #### iProgramInCpp#0001 (some tips on reversal)
 <br />
 # Licensed
