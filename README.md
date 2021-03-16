@@ -11,7 +11,7 @@ Supported on 3.59<br />
  // LogToConsole IDA (Pseudocode)<br />
  v42 = "Located `wserver``, connecting...``";<br />
  0x37DCD0 -->  sub_14037DCD0(v42); (v42 -> fmt --> aka the msg to send)
-
+```
 # Libs
 MinHook<br />
 IMGui<br />
