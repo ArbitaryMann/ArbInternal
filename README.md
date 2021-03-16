@@ -1,4 +1,8 @@
-# Internal
-- [x] dll inject
-- [x] d3d9 imgui hook
-- [x] no patterns usage
+# ARBINTERNAL-PORTABLE
+Supported on 3.59
+
+
+# Libs
+MinHook
+IMGui
+Proton (not much but using it)
