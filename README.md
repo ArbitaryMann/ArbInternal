@@ -1,5 +1,5 @@
 # arbinternal-1.40
-
+ArbInternal is an open sourced project which offers you an ability to control all over the ENet Packets on official growtopia client.
 ### Special Thanks to
 #### Arbitary#1234 (Development)
 #### iProgramInCpp#0001 (some tips on reversal)
