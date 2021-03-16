@@ -1,0 +1,17 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(519,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (hirahook.vcxproj, ImGui DirectX 9 Hook.vcxproj, internal.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  main.cpp
+C:\Users\Ali\Desktop\desktop\llfsdlf\arbternal\arbternal\proton\variant.hpp(321,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\arbternal\arbternal\proton\variant.hpp(338,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\arbternal\arbternal\proton\variant.hpp(354,1): warning C4267: 'initializing': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\arbternal\arbternal\main.cpp(61,15): warning C4244: 'argument': conversion from 'uintptr_t' to 'uint32_t', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\arbternal\arbternal\main.cpp(68,40): warning C4244: 'argument': conversion from 'uint64_t' to 'int', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\arbternal\arbternal\main.cpp(70,17): warning C4244: 'argument': conversion from 'uintptr_t' to 'uint32_t', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\arbternal\arbternal\main.cpp(94,15): warning C4244: 'argument': conversion from 'uintptr_t' to 'uint32_t', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\arbternal\arbternal\main.cpp(103,17): warning C4244: 'argument': conversion from 'uintptr_t' to 'uint32_t', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\arbternal\arbternal\main.cpp(134,11): warning C4244: 'return': conversion from 'uint64_t' to 'int', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\arbternal\arbternal\main.cpp(167,90): warning C4267: 'argument': conversion from 'size_t' to 'INT', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\arbternal\arbternal\main.cpp(169,134): warning C4267: 'argument': conversion from 'size_t' to 'INT', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\arbternal\arbternal\main.cpp(107): warning C4717: 'enet_send_packet': recursive on all control paths, function will cause runtime stack overflow
+C:\Users\Ali\Desktop\desktop\llfsdlf\arbternal\arbternal\main.cpp(72): warning C4717: 'enet_raw_packet': recursive on all control paths, function will cause runtime stack overflow
+C:\Users\Ali\Desktop\desktop\llfsdlf\arbternal\arbternal\main.cpp(139): warning C4715: 'FindENETSendOffset': not all control paths return a value
+  arbternal.vcxproj -> C:\Users\Ali\Desktop\desktop\llfsdlf\arbternal\x64\Debug\arbternal-portable.dll

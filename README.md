@@ -1,2 +1,4 @@
-# ArbInternal
-ArbInternal is an open sourced project which offers you an ability to control all over the ENet Packets on official growtopia client.
+# Internal
+- [x] dll inject
+- [x] d3d9 imgui hook
+- [x] no patterns usage

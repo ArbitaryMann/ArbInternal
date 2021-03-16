@@ -1,0 +1,21 @@
+﻿  main.cpp
+C:\Users\Ali\Desktop\desktop\llfsdlf\Internal-master\ImGui DirectX 9 Hook\proton\variant.hpp(321,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\Internal-master\ImGui DirectX 9 Hook\proton\variant.hpp(338,1): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\Internal-master\ImGui DirectX 9 Hook\proton\variant.hpp(354,1): warning C4267: 'initializing': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\Internal-master\ImGui DirectX 9 Hook\main.cpp(79,15): warning C4244: 'argument': conversion from 'uintptr_t' to 'uint32_t', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\Internal-master\ImGui DirectX 9 Hook\main.cpp(84,17): warning C4244: 'argument': conversion from 'uintptr_t' to 'uint32_t', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\Internal-master\ImGui DirectX 9 Hook\main.cpp(90,15): warning C4244: 'argument': conversion from 'uintptr_t' to 'uint32_t', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\Internal-master\ImGui DirectX 9 Hook\main.cpp(97,40): warning C4244: 'argument': conversion from 'uint64_t' to 'int', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\Internal-master\ImGui DirectX 9 Hook\main.cpp(99,17): warning C4244: 'argument': conversion from 'uintptr_t' to 'uint32_t', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\Internal-master\ImGui DirectX 9 Hook\main.cpp(125,15): warning C4244: 'argument': conversion from 'uintptr_t' to 'uint32_t', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\Internal-master\ImGui DirectX 9 Hook\main.cpp(136,17): warning C4244: 'argument': conversion from 'uintptr_t' to 'uint32_t', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\Internal-master\ImGui DirectX 9 Hook\main.cpp(167,11): warning C4244: 'return': conversion from 'uint64_t' to 'int', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\Internal-master\ImGui DirectX 9 Hook\main.cpp(199,12): warning C4553: '==': result of expression not used; did you intend '='?
+C:\Users\Ali\Desktop\desktop\llfsdlf\Internal-master\ImGui DirectX 9 Hook\main.cpp(209,90): warning C4267: 'argument': conversion from 'size_t' to 'INT', possible loss of data
+C:\Users\Ali\Desktop\desktop\llfsdlf\Internal-master\ImGui DirectX 9 Hook\main.cpp(211,134): warning C4267: 'argument': conversion from 'size_t' to 'INT', possible loss of data
+  Generating code
+  8 of 1250 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    14 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  ImGui DirectX 9 Hook.vcxproj -> C:\Users\Ali\Desktop\desktop\llfsdlf\Internal-master\x64\Release\internal.dll
