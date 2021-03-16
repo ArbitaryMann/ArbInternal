@@ -19,7 +19,7 @@
  
  LogToConsole IDA (Pseudocode)<br />
  
-```v42 = "Located `wserver``, connecting...``";
+ v42 = "Located `wserver``, connecting...``";
  0x37DCD0 -->  sub_14037DCD0(v42); (v42 -> fmt --> aka the msg to send)
 ```
 ### Libs
