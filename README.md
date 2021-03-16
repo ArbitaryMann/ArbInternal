@@ -1,6 +1,6 @@
 # arbinternal-1.40
 
-# Special Thanks to
+### Special Thanks to
 #### Arbitary#1234 (Development)
 #### iProgramInCpp#0001 (some tips on reversal)
 <br />
@@ -12,7 +12,7 @@
 
 
 
-# Strings to find offsets
+### Strings to find offsets
  
  ```
  SendPacket IDA (Pseudocode)
@@ -25,12 +25,12 @@
 ```v42 = "Located `wserver``, connecting...``";
  0x37DCD0 -->  sub_14037DCD0(v42); (v42 -> fmt --> aka the msg to send)
 ```
-# Libs
+### Libs
 MinHook<br />
 IMGui<br />
 Proton (not much but using it)
 
-# Screenshots
+### Screenshots
 <details>
 ![Alt Text](https://github.com/ArbitaryMann/ArbInternal/blob/main/resources/peery.gif?raw=true)
 </details>
