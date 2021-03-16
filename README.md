@@ -18,3 +18,6 @@ Supported on 3.59<br />
 MinHook<br />
 IMGui<br />
 Proton (not much but using it)
+
+# Screenshots
+![Alt Text](https://github.com/ArbitaryMann/ArbInternal/blob/main/resources/peery.gif?raw=true)
