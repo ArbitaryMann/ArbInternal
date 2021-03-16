@@ -32,4 +32,6 @@ IMGui<br />
 Proton (not much but using it)
 
 # Screenshots
+<details>
 ![Alt Text](https://github.com/ArbitaryMann/ArbInternal/blob/main/resources/peery.gif?raw=true)
+</details>
