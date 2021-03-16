@@ -8,6 +8,9 @@ Supported on 3.59<br />
  v20 = sub_1400E1D20(v19);<br />
  0x41C620 -->sub_14041C620(3i64, v36, *(_QWORD *)(*(_QWORD *)(v20 + 3784) + 168i64));
 
+ // LogToConsole IDA (Pseudocode)<br />
+ v42 = "Located `wserver``, connecting...``";<br />
+ 0x37DCD0 -->  sub_14037DCD0(v42); (v42 -> fmt --> aka the msg to send)
 
 # Libs
 MinHook<br />
