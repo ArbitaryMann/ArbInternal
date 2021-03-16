@@ -5,7 +5,6 @@
 #include "proton/hash.hpp"
 #include "proton/variant.hpp"
 #include "proton/vector.hpp"
-#include "utils.hpp"
 #include <fstream>
 #include "Hooks.h"
 #include <random>
@@ -54,8 +53,8 @@ struct GameLogicComponent {
 
 };
 
-typedef uint64_t(__fastcall* GTApplication)();
-GTApplication GTApp;
+typedef uint64_t(__cdecl* _app)();
+_app app;
 
 
 
@@ -87,6 +86,8 @@ int setupHooks() {
 
 	VirtualProtectEx(gthandle, (LPVOID)(base + 0x2EDD53), 2, PAGE_EXECUTE_READWRITE, &aa);
 	VirtualProtectEx(gthandle, (LPVOID)(base + 0xE398A), 6, PAGE_EXECUTE_READWRITE, &aa);
+	VirtualProtectEx(gthandle, (LPVOID)(base + packet_handle), 6, PAGE_EXECUTE_READWRITE, &aa);
+
 	memset((PVOID)(base + 0x2EDD53), 0x74, 1);
 	SendConsoleMessage = (_OnConsoleMessage)(base + log_msg);
 	LOG = (__System)(base + log_msg);
@@ -94,7 +95,6 @@ int setupHooks() {
 	sendraw_newfunc = (base + send_packet_raw);
 	MH_CreateHook(&(PVOID&)sendpacker_newfunc, &enet_send_packet, 0);
 	MH_CreateHook(&(PVOID&)sendraw_newfunc, &enet_raw_packet, 0);
-	OnFunc = (_OnFunc)(base + packet_handle);
 	enetPacket = (_enetPacket)(base + packet_handle);
 	SendRawPacketReliable = (_SendRawPackets)(base + send_packet_raw);
 	return 0;
@@ -116,7 +116,11 @@ int enet_send_packet(int a1, string a2, uint64_t a3) {
 
 }
 
+uint64_t enet_Peer() {
+	app = (_app)(base + gameLogic);
 
+	return *(uint64_t*)(*(uint64_t*)(app() + 3784) + 168i64); // USE THIS FOR CREATING PEER -> RECEIVING PEER SOCK
+}
 
 bool initialized = false;
 
@@ -179,9 +183,6 @@ long __stdcall PHook::hkEndScene(LPDIRECT3DDEVICE9 device)
 	dx_Font->DrawTextA(NULL, "Made By ArbitaryMann (c) 2020-2021", strlen("Made By ArbitaryMann (c) 2020-2021"), 0, DT_NOCLIP, rainbow());
 	device->ShowCursor(false);
 
-	GTApp = (GTApplication)(base + gameLogic);
-
-	auto enet_peer= *(uint64_t*)(*(uint64_t*)(GTApp() + 3784) + 168i64); // USE THIS FOR CREATING PEER -> RECEIVING PEER SOCK
 
 
 	if (ImGui::Button("Packet Simulation",ImVec2(140, 30))) {
@@ -205,7 +206,7 @@ long __stdcall PHook::hkEndScene(LPDIRECT3DDEVICE9 device)
 
 
 		if (ImGui::Button("send packet")) {
-			enetPacket(i0, text, enet_peer);
+			enetPacket(i0, text, enet_Peer());
 			
 			string packet = text;
 			std::vector<std::uint32_t> pData;
@@ -221,20 +222,20 @@ long __stdcall PHook::hkEndScene(LPDIRECT3DDEVICE9 device)
 
 		ImGui::SameLine();
 		if (ImGui::Button("send to exit")) {
-			enetPacket(3, "action|quit_to_exit", enet_peer);
+			enetPacket(3, "action|quit_to_exit", enet_Peer());
 		}
 	}
 	if (mn_2 == true) {
 		ImGui::Separator();
 		ImGui::Text("ENet Information & Client Information");
 		string test = "ENet Peer Address -> 0x";
-		string peer_addr = test.append(to_string(enet_peer));
+		string peer_addr = test.append(to_string(enet_Peer()));
 		string packet_header = "enet_packet -> ";
 		string pData = packet_header.append(last_packet);
-		if (enet_peer > 0) {
+		if (enet_Peer() > 0) {
 			ImGui::Separator();
 
-			const char* listbox_items[] = { peer_addr.c_str(), "ENet Client State -> connected", pData.c_str(),  };
+			const char* listbox_items[] = { peer_addr.c_str(), "ENet Client State -> connected", pData.c_str()  };
 			static int listbox_item_current = -1, listbox_item_current2 = -1;
 			
 
