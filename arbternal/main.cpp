@@ -107,10 +107,13 @@ int enet_send_packet(int a1, string a2, uint64_t a3) {
 	last_packet = a2;
 	SendConsoleMessage(y.c_str(), 30i64, 0);
 	
+	if (a2.find("game_version")) {
+		SendConsoleMessage("Login Packet Received", 0, 0);
+	}
 	
-	
+	SendConsoleMessage(a2.c_str(), 0, 0);
 	enetPacket(a1, a2.c_str(), a3);
-	deactivateHook(sendpacker_newfunc);
+	//deactivateHook(sendpacker_newfunc);
 
 	return 0;
 
