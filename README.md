@@ -32,5 +32,5 @@ Proton (not much but using it)
 
 ### Screenshots
 <details>
-![Alt Text](https://github.com/ArbitaryMann/ArbInternal/blob/main/resources/peery.gif?raw=true)
+<img src="https://github.com/ArbitaryMann/ArbInternal/blob/main/resources/peery.gif?raw=true">
 </details>
