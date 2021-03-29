@@ -5,6 +5,7 @@
 #include "proton/hash.hpp"
 #include "proton/variant.hpp"
 #include "proton/vector.hpp"
+
 #include <fstream>
 #include "Hooks.h"
 #include <random>
@@ -53,8 +54,8 @@ struct GameLogicComponent {
 
 };
 
-typedef uint64_t(__cdecl* _app)();
-_app app;
+typedef uint64_t(__fastcall* GTApplication)();
+GTApplication GTApp;
 
 
 
@@ -86,8 +87,6 @@ int setupHooks() {
 
 	VirtualProtectEx(gthandle, (LPVOID)(base + 0x2EDD53), 2, PAGE_EXECUTE_READWRITE, &aa);
 	VirtualProtectEx(gthandle, (LPVOID)(base + 0xE398A), 6, PAGE_EXECUTE_READWRITE, &aa);
-	VirtualProtectEx(gthandle, (LPVOID)(base + packet_handle), 6, PAGE_EXECUTE_READWRITE, &aa);
-
 	memset((PVOID)(base + 0x2EDD53), 0x74, 1);
 	SendConsoleMessage = (_OnConsoleMessage)(base + log_msg);
 	LOG = (__System)(base + log_msg);
@@ -95,6 +94,7 @@ int setupHooks() {
 	sendraw_newfunc = (base + send_packet_raw);
 	MH_CreateHook(&(PVOID&)sendpacker_newfunc, &enet_send_packet, 0);
 	MH_CreateHook(&(PVOID&)sendraw_newfunc, &enet_raw_packet, 0);
+	OnFunc = (_OnFunc)(base + packet_handle);
 	enetPacket = (_enetPacket)(base + packet_handle);
 	SendRawPacketReliable = (_SendRawPackets)(base + send_packet_raw);
 	return 0;
@@ -107,23 +107,16 @@ int enet_send_packet(int a1, string a2, uint64_t a3) {
 	last_packet = a2;
 	SendConsoleMessage(y.c_str(), 30i64, 0);
 	
-	if (a2.find("game_version")) {
-		SendConsoleMessage("Login Packet Received", 0, 0);
-	}
 	
-	SendConsoleMessage(a2.c_str(), 0, 0);
+	
 	enetPacket(a1, a2.c_str(), a3);
-	//deactivateHook(sendpacker_newfunc);
+	deactivateHook(sendpacker_newfunc);
 
 	return 0;
 
 }
 
-uint64_t enet_Peer() {
-	app = (_app)(base + gameLogic);
 
-	return *(uint64_t*)(*(uint64_t*)(app() + 3784) + 168i64); // USE THIS FOR CREATING PEER -> RECEIVING PEER SOCK
-}
 
 bool initialized = false;
 
@@ -137,6 +130,13 @@ void InitImGui(LPDIRECT3DDEVICE9 device)
 }
 
 
+int wrenchToInt(int NIDcount) {
+	for (int netid = 0; netid < NIDcount; netid++) {
+		string x = "action|wrench\nnetid|";
+		string y = x.append(to_string(netid));
+		enetPacket(2, y, enet_peer);
+	}
+}
 
 int FindENETSendOffset(uint32_t size,uint64_t range) {
 	for (uint64_t begin = 0;begin < range;++begin) {
@@ -157,7 +157,7 @@ int FindENETSendOffset(uint32_t size,uint64_t range) {
 ID3DXFont* dx_Font;
 bool mn_1 = true;
 bool mn_2 = false;
-
+bool mn_3 = false;
 long __stdcall PHook::hkEndScene(LPDIRECT3DDEVICE9 device)
 {
 	if (!initialized)
@@ -181,22 +181,105 @@ long __stdcall PHook::hkEndScene(LPDIRECT3DDEVICE9 device)
 	
 	dx_Font = 0;
 	D3DXCreateFontA(device, 22, 12, FW_MEDIUM, 0, 0, DEFAULT_CHARSET, OUT_TT_ONLY_PRECIS, PROOF_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Arial", &dx_Font);
-	dx_Font->DrawTextA(NULL, "REALINTERNAL", strlen("REALINTERNAL"), 0, DT_NOCLIP, rainbow());
-	D3DXCreateFontA(device, 12, 8, FW_MEDIUM, 0, 160, DEFAULT_CHARSET, OUT_TT_ONLY_PRECIS, PROOF_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Arial", &dx_Font);
+
+	D3DXCreateFontA(device, 15, 8,FW_NORMAL, 0, 160, DEFAULT_CHARSET, OUT_TT_ONLY_PRECIS, PROOF_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Arial", &dx_Font);
 	dx_Font->DrawTextA(NULL, "Made By ArbitaryMann (c) 2020-2021", strlen("Made By ArbitaryMann (c) 2020-2021"), 0, DT_NOCLIP, rainbow());
 	device->ShowCursor(false);
 
+	GTApp = (GTApplication)(base + gameLogic);
+
+	auto enet_peer= *(uint64_t*)(*(uint64_t*)(GTApp() + 3784) + 168i64); // USE THIS FOR CREATING PEER -> RECEIVING PEER SOCK
 
 
 	if (ImGui::Button("Packet Simulation",ImVec2(140, 30))) {
 		mn_1 = true;
 		mn_2 = false;
+		mn_3 = false;
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Client Information",ImVec2(140,30))) {
 		mn_2 = true;
 		mn_1 = false;
+		mn_3 = false;
 	}
+	ImGui::SameLine();
+	if (ImGui::Button("More", ImVec2(140, 30))) {
+		mn_2 = false;
+		mn_3 = true;
+		mn_1 = false;
+	}
+	static int w = 1;
+	if (mn_3 == true) {
+
+
+		ImGui::Text("World Management");
+		ImGui::Separator();
+		ImGui::InputInt("netID", &w);
+
+		if (ImGui::Button("Execute")) {
+			wrenchToInt(w);
+			for (int netid = 0; netid < w; netid++) {
+				string x = "action|wrench\nnetid|";
+				string y = x.append(to_string(netid));
+				enetPacket(2, y, enet_peer);
+				enetPacket(3, y, enet_peer);
+				enetPacket(1, y, enet_peer);
+			}
+
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Kick")) {
+			wrenchToInt(w);
+			for (int netid = 0; netid < w; netid++) {
+				string x = "action|dialog_return\ndialog_name|popup\nnetid|";
+				string y = x.append(to_string(netid));
+				string w = y.append("|\nnetID|");
+				string wws = w.append(to_string(netid));
+				string q = wws.append("|\nbuttonClicked|kick");
+				enetPacket(2, q, enet_peer);
+				enetPacket(3, q, enet_peer);
+				enetPacket(1, q, enet_peer);
+			}
+
+
+
+		}
+
+
+
+		ImGui::SameLine();
+		if (ImGui::Button("Pull")) {
+			wrenchToInt(w);
+			for (int netid = 0; netid < w; netid++) {
+				string x = "action|dialog_return\ndialog_name|popup\nnetid|";
+				string y = x.append(to_string(netid));
+				string w = y.append("|\nnetID|");
+				string wws = w.append(to_string(netid));
+				string q = wws.append("|\nbuttonClicked|pull");
+				enetPacket(2, q, enet_peer);
+				enetPacket(3, q, enet_peer);
+				enetPacket(1, q, enet_peer);
+			}
+			if (ImGui::Button("Ban")) {
+				wrenchToInt(w);
+				for (int netid = 0; netid < w; netid++) {
+					string x = "action|dialog_return\ndialog_name|popup\nnetid|";
+					string y = x.append(to_string(netid));
+					string w = y.append("|\nnetID|");
+					string wws = w.append(to_string(netid));
+					string q = wws.append("|\nbuttonClicked|ban");
+					enetPacket(2, q, enet_peer);
+					enetPacket(3, q, enet_peer);
+					enetPacket(1, q, enet_peer);
+				}
+
+			}
+		}
+	}
+		
+	
+		
+	
 	if (mn_1 == true) {
 		static char text[1024 * 16];
 		static ImGuiInputTextFlags flags = ImGuiInputTextFlags_AllowTabInput;
@@ -209,13 +292,17 @@ long __stdcall PHook::hkEndScene(LPDIRECT3DDEVICE9 device)
 
 
 		if (ImGui::Button("send packet")) {
-			enetPacket(i0, text, enet_Peer());
+			enetPacket(i0, text, enet_peer);
 			
 			string packet = text;
 			std::vector<std::uint32_t> pData;
 			
-			
-			SendConsoleMessage("msg -> sent to server.", 30i64, 0);
+			string msg = "Packet Type -> ";
+			string a2 = msg.append(to_string(i0));
+			string a3 = a2.append("\nPacket -> ");
+			string a4 = a3.append(packet);
+			string a5 = a4.append("\n[CLIENT] Parsed & Executed!");
+			SendConsoleMessage(a5.c_str(), 30i64, 0);
 
 
 		}
@@ -225,20 +312,20 @@ long __stdcall PHook::hkEndScene(LPDIRECT3DDEVICE9 device)
 
 		ImGui::SameLine();
 		if (ImGui::Button("send to exit")) {
-			enetPacket(3, "action|quit_to_exit", enet_Peer());
+			enetPacket(3, "action|quit_to_exit", enet_peer);
 		}
 	}
 	if (mn_2 == true) {
 		ImGui::Separator();
 		ImGui::Text("ENet Information & Client Information");
 		string test = "ENet Peer Address -> 0x";
-		string peer_addr = test.append(to_string(enet_Peer()));
+		string peer_addr = test.append(to_string(enet_peer));
 		string packet_header = "enet_packet -> ";
 		string pData = packet_header.append(last_packet);
-		if (enet_Peer() > 0) {
+		if (enet_peer > 0) {
 			ImGui::Separator();
 
-			const char* listbox_items[] = { peer_addr.c_str(), "ENet Client State -> connected", pData.c_str()  };
+			const char* listbox_items[] = { peer_addr.c_str(), "ENet Client State -> connected", pData.c_str(),  };
 			static int listbox_item_current = -1, listbox_item_current2 = -1;
 			
 
